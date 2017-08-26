@@ -2,6 +2,8 @@ package com.zhiqin.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,15 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.pagehelper.PageInfo;
 import com.zhiqin.model.UserInfo;
 import com.zhiqin.service.UserInfoService;
+import com.zhiqin.util.annotation.Json;
 
 @RestController
 @RequestMapping("/users")
 public class UserInfoController {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private UserInfoService userInfoService;
 
     @RequestMapping
     public PageInfo<UserInfo> getAll(UserInfo userInfo) {
+        logger.info("get all user info");
         List<UserInfo> userInfoList = userInfoService.getAll(userInfo);
         return new PageInfo<>(userInfoList);
     }
@@ -51,6 +57,13 @@ public class UserInfoController {
         userInfoService.save(userInfo);
         result.put("userInfo", userInfo);
         result.put("msg", msg);
+        return result;
+    }
+
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    public ModelMap test(@Json UserInfo user) {
+        ModelMap result = new ModelMap();
+        result.put("msg", user.getId());
         return result;
     }
 }

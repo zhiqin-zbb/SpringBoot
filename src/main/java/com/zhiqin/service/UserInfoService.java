@@ -1,5 +1,8 @@
 package com.zhiqin.service;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +32,25 @@ public class UserInfoService {
         userInfoMapper.deleteByPrimaryKey(id);
     }
 
-    public void save(UserInfo country) {
-        if (country.getId() != null) {
-            userInfoMapper.updateByPrimaryKey(country);
+    public void save(UserInfo user) {
+        if (user.getId() != null) {
+            user.setPassword(creatMD5(user.getPassword()));
+            userInfoMapper.updateByPrimaryKey(user);
         } else {
-            userInfoMapper.insert(country);
+            user.setPassword(creatMD5(user.getPassword()));
+            userInfoMapper.insert(user);
         }
+    }
+
+    private String creatMD5(String password) {
+        // 生成一个MD5加密计算摘要
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return new BigInteger(1, md.digest()).toString(16);
     }
 }
