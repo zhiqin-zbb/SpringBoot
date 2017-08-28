@@ -13,5 +13,13 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Json {
-    public String value() default "";
+    /**
+     * 针对List 泛型对象化映射,单元类型定义
+     */
+    Class[] types() default java.lang.Object.class;
+
+    /**
+     * json key path定义
+     */
+    String path() default "";
 }
