@@ -1,4 +1,4 @@
-package com.zhiqin.conf;
+package com.zhiqin.config;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.zhiqin.util.annotation.JsonArgumentResolver;
+import com.zhiqin.common.annotation.JsonArgumentResolver;
 
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {

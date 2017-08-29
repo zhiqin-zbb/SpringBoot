@@ -1,4 +1,4 @@
-package com.zhiqin.util.filter;
+package com.zhiqin.common.filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
-import com.zhiqin.util.wrapper.Base64HttpServletRequestWrapper;
+import com.zhiqin.common.wrapper.Base64HttpServletRequestWrapper;
 
 /**
  * Created by zhangbinbin on 2017/8/28.

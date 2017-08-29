@@ -1,7 +1,7 @@
 package com.zhiqin.mapper;
 
 import com.zhiqin.model.UserInfo;
-import com.zhiqin.util.MyMapper;
+import com.zhiqin.common.util.MyMapper;
 
 /**
  * @author liuzh_3nofxnp

@@ -1,10 +1,10 @@
-package com.zhiqin.conf;
+package com.zhiqin.config;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.zhiqin.util.filter.Base64DecodingFilter;
+import com.zhiqin.common.filter.Base64DecodingFilter;
 
 /**
  * Created by zhangbinbin on 2017/8/28.

@@ -2,6 +2,7 @@
 <head>
     <title>Mybatis分页插件 - 测试页面</title>
     <script src="${request.contextPath}/static/js/jquery-1.11.1.min.js"></script>
+    <script src="${request.contextPath}/static/js/Base64.js"></script>
     <link href="${request.contextPath}/static/css/style.css" rel="stylesheet" type="text/css"/>
     <style type="text/css">
         .pageDetail {
@@ -13,12 +14,14 @@
         }
     </style>
     <script>
+        function redirect(element) {
+            window.location.href = window.location.origin + window.location.pathname + element;
+        };
         $(function () {
             $('#list').click(function () {
                 $('.pageDetail').toggleClass('show');
             });
         });
-
     </script>
 </head>
 <body>
@@ -156,16 +159,17 @@
                     </#if>
                     <#if nav != pageInfo.pageNum>
                         <td>
-                            <a href="${request.contextPath}/countries?page=${nav}&rows=${pageInfo.pageSize}&countryname=<#if queryParam.countryname??>${queryParam.countryname}</#if>&countrycode=<#if queryParam.countrycode??>${queryParam.countrycode}</#if>">${nav}</a>
+                            <a href="${request.contextPath}/countries?page=${nav}&rows=${pageInfo.pageSize}<#if queryParam.countryname??>&countryname=${queryParam.countryname}</#if><#if queryParam.countrycode??>&countrycode=${queryParam.countrycode}</#if>">${nav}</a>
                         </td>
                     </#if>
                 </#list>
                 <#if pageInfo.hasNextPage>
                     <td>
-                        <a href="${request.contextPath}/countries?page=${pageInfo.nextPage}&rows=${pageInfo.pageSize}&countryname=<#if queryParam.countryname??>${queryParam.countryname}</#if>&countrycode=<#if queryParam.countrycode??>${queryParam.countrycode}</#if>">下一页</a>
+                        <a href="${request.contextPath}/countries?page=${pageInfo.nextPage}&rows=${pageInfo.pageSize}<#if queryParam.countryname??>&countryname=${queryParam.countryname}</#if><#if queryParam.countrycode??>&countrycode=${queryParam.countrycode}</#if>">下一页</a>
                     </td>
                     <td>
-                        <a href="${request.contextPath}/countries?page=${pageInfo.pages}&rows=${pageInfo.pageSize}&countryname=<#if queryParam.countryname??>${queryParam.countryname}</#if>&countrycode=<#if queryParam.countrycode??>${queryParam.countrycode}</#if>">尾页</a>
+                        <a href="javascript:void(0);"
+                           onclick="redirect('?' + window.BASE64.encoder('page=' + ${pageInfo.pages} + '&rows=' + ${pageInfo.pageSize}));">尾页</a>
                     </td>
                 </#if>
             </tr>

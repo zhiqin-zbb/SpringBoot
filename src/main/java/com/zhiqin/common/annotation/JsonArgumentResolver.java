@@ -1,4 +1,4 @@
-package com.zhiqin.util.annotation;
+package com.zhiqin.common.annotation;
 
 import java.io.BufferedReader;
 import java.io.IOException;

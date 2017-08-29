@@ -1,7 +1,7 @@
 package com.zhiqin.mapper;
 
 import com.zhiqin.model.City;
-import com.zhiqin.util.MyMapper;
+import com.zhiqin.common.util.MyMapper;
 
 public interface CityMapper extends MyMapper<City> {
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.pagehelper.PageInfo;
 import com.zhiqin.model.UserInfo;
 import com.zhiqin.service.UserInfoService;
-import com.zhiqin.util.annotation.Json;
+import com.zhiqin.common.annotation.Json;
 
 @RestController
 @RequestMapping("/users")

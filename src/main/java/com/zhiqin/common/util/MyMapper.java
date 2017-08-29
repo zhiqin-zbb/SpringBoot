@@ -1,4 +1,4 @@
-package com.zhiqin.util;
+package com.zhiqin.common.util;
 
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;

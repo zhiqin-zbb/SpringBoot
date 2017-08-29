@@ -31,7 +31,7 @@ mybatis:
 
 mapper:
     mappers:
-        - com.zhiqin.util.MyMapper
+        - com.zhiqin.common.util.MyMapper
     not-empty: false
     identity: MYSQL
 
