@@ -1,29 +1,24 @@
 <html>
 <head>
     <title>Mybatis分页插件 - 测试页面</title>
-    <script src="${request.contextPath}/static/js/country.js"></script>
-    <link href="${request.contextPath}/static/css/style.css" rel="stylesheet" type="text/css"/>
+    <script src="${request.contextPath}/static/js/util/Loader.js"></script>
+    <script src="${request.contextPath}/static/js/country/countryConfig.js"></script>
     <style type="text/css">
         .pageDetail {
             display: none;
         }
+
         .show {
             display: table-row;
         }
     </style>
-    <script>
-        $(function () {
-            $('#list').click(function () {
-                $('.pageDetail').toggleClass('show');
-            });
-        });
-    </script>
 </head>
 <body>
 <div class="wrapper">
     <div class="middle">
         <h1 style="padding: 50px 0 20px;">国家(地区)列表</h1>
 
+        <button id="test">Test</button>
         <form>
             <table class="gridtable" style="width:100%;">
                 <tr>
