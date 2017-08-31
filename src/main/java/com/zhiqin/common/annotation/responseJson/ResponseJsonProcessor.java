@@ -1,21 +1,20 @@
 package com.zhiqin.common.annotation.responseJson;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.zhiqin.common.annotation.responseJson.wrapper.BeanWrapper;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.method.support.ModelAndViewContainer;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhangbinbin on 2017/8/31.
@@ -57,19 +56,18 @@ public class ResponseJsonProcessor implements HandlerMethodReturnValueHandler, I
     public void handleReturnValue(Object returnValue, MethodParameter returnType, ModelAndViewContainer mavContainer, NativeWebRequest webRequest) throws Exception {
         Object result = returnValue;
         mavContainer.setRequestHandled(true);
-        ResponseJson responseJson = null;
+        ResponseJson responseJson = returnType.getMethodAnnotation(ResponseJson.class);
         ServletServerHttpResponse outputMessage = createOutputMessage(webRequest);
-        responseJson = returnType.getMethodAnnotation(ResponseJson.class);
 
         if (returnValue == null) {
-            Map<String, Object> message = new HashMap<String, Object>();
+            Map<String, Object> message = new HashMap<>();
             message.put("success", true);
             message.put("data", new HashMap<String, String>());
             result = message;
         } else {
             if ((responseJson.location() == ResponseJson.Location.MESSAGE)
                     || ((returnValue instanceof String) && (responseJson.location() == ResponseJson.Location.UNDEFINED))) {
-                Map<String, Object> message = new HashMap<String, Object>();
+                Map<String, Object> message = new HashMap<>();
                 message.put("success", true);
                 message.put("msg", returnValue);
                 result = message;
@@ -81,34 +79,29 @@ public class ResponseJsonProcessor implements HandlerMethodReturnValueHandler, I
                     }
                 }
             }
-
         }
 
         if (responseJson.compressType() == ResponseJson.compressType.NOCOMPRESS) {
             if (responseJson.location() == ResponseJson.Location.DATA) {
-                //只返回json
-                HttpMessageConverter converter= new MappingJackson2HttpMessageConverter();
-                converter.write(result,
-                        new MediaType(MediaType.APPLICATION_JSON, Collections.singletonMap("charset", "UTF-8")),
-                        outputMessage);
-            } else if(responseJson.location() == ResponseJson.Location.BYREQUEST) {
-                //根据http请求头中的设置阻止返回数据
+                // 只返回json
+                HttpMessageConverter converter = new JsonHttpMessageConverter();
+                converter.write(result, new MediaType(MediaType.APPLICATION_JSON, Collections.singletonMap("charset", "UTF-8")), outputMessage);
+            } else if (responseJson.location() == ResponseJson.Location.BYREQUEST) {
+                // 根据http请求头中的设置返回数据
                 int converterType = MessageConverterTpyeUtil.getMessageConverterTypeFromHttpHead(
                         webRequest.getHeader(ResponseDataType.HTTP_HEAD_REQUEST_DATA_TYPE));
                 switch (converterType) {
                     case MessageConverterTpyeUtil.MESSAGE_CONVERTER_TYPE_JSON:
-                        HttpMessageConverter converter= new JsonHttpMessageConverter();
-                        //设置http头
+                        HttpMessageConverter converter = new JsonHttpMessageConverter();
+                        // 设置http头
                         outputMessage.getHeaders().set(ResponseDataType.HTTP_HEAD_RESPONSE_DATA_TYPE,
-                                ResponseDataType.TUNIU_RESPONSE_DATA_TYPE_JSON);
-                        converter.write(result,
-                                new MediaType(MediaType.APPLICATION_JSON, Collections.singletonMap("charset", "UTF-8")),
-                                outputMessage);
+                                ResponseDataType.RESPONSE_DATA_TYPE_JSON);
+                        converter.write(result, new MediaType(MediaType.APPLICATION_JSON, Collections.singletonMap("charset", "UTF-8")), outputMessage);
                         break;
                     case MessageConverterTpyeUtil.MESSAGE_CONVERTER_TYPE_JSON_BASE64:
-                        //设置http头
+                        // 设置http头
                         outputMessage.getHeaders().set(ResponseDataType.HTTP_HEAD_RESPONSE_DATA_TYPE,
-                                ResponseDataType.TUNIU_RESPONSE_DATA_TYPE_JSON_BASE64);
+                                ResponseDataType.RESPONSE_DATA_TYPE_JSON_BASE64);
                         messageConverter.write(result,
                                 new MediaType(MediaType.APPLICATION_JSON, Collections.singletonMap("charset", "UTF-8")),
                                 outputMessage);
@@ -119,29 +112,29 @@ public class ResponseJsonProcessor implements HandlerMethodReturnValueHandler, I
                                 outputMessage);
                 }
             } else {
-                //返回json+base64
+                // 返回json+base64
                 messageConverter.write(result,
                         new MediaType(MediaType.APPLICATION_JSON, Collections.singletonMap("charset", "UTF-8")),
                         outputMessage);
             }
         } else {
-            int converterType = MessageConverterTpyeUtil.MESSAGE_CONVERTER_TYPE_UNDEFINE;
+            int converterType;
             int compressType = ClientCompressFactory.COMPRESS_UNKNOW;
-            if (responseJson.location() == Location.DATA) {
+            if (responseJson.location() == ResponseJson.Location.DATA) {
                 converterType = MessageConverterTpyeUtil.MESSAGE_CONVERTER_TYPE_JSON;
-            } else if(responseJson.location() == Location.BYREQUEST) {
+            } else if (responseJson.location() == ResponseJson.Location.BYREQUEST) {
                 converterType = MessageConverterTpyeUtil.getMessageConverterTypeFromHttpHead(
                         webRequest.getHeader(ResponseDataType.HTTP_HEAD_REQUEST_DATA_TYPE));
-                //设置http头
+                // 设置http头
                 switch (converterType) {
                     case MessageConverterTpyeUtil.MESSAGE_CONVERTER_TYPE_JSON:
                         outputMessage.getHeaders().set(ResponseDataType.HTTP_HEAD_RESPONSE_DATA_TYPE,
-                                ResponseDataType.TUNIU_RESPONSE_DATA_TYPE_JSON);
+                                ResponseDataType.RESPONSE_DATA_TYPE_JSON);
                         break;
                     case MessageConverterTpyeUtil.MESSAGE_CONVERTER_TYPE_JSON_BASE64:
 
                         outputMessage.getHeaders().set(ResponseDataType.HTTP_HEAD_RESPONSE_DATA_TYPE,
-                                ResponseDataType.TUNIU_RESPONSE_DATA_TYPE_JSON_BASE64);
+                                ResponseDataType.RESPONSE_DATA_TYPE_JSON_BASE64);
                         break;
                     default:
                         messageConverter.write(result,
@@ -166,7 +159,6 @@ public class ResponseJsonProcessor implements HandlerMethodReturnValueHandler, I
             compressHttpMessageConverter.write(result,
                     new MediaType(MediaType.APPLICATION_JSON, Collections.singletonMap("charset", "UTF-8")),
                     outputMessage);
-
         }
     }
 

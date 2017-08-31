@@ -1,4 +1,4 @@
-package com.zhiqin.common.annotation;
+package com.zhiqin.common.annotation.requestJson;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

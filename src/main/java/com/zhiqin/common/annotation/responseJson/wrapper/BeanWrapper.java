@@ -1,4 +1,4 @@
-package com.zhiqin.common.annotation.responseJson;
+package com.zhiqin.common.annotation.responseJson.wrapper;
 
 import org.springframework.core.MethodParameter;
 

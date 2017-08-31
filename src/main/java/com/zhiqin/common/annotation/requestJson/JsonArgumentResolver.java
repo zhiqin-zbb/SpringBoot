@@ -1,4 +1,4 @@
-package com.zhiqin.common.annotation;
+package com.zhiqin.common.annotation.requestJson;
 
 import java.io.BufferedReader;
 import java.io.IOException;
