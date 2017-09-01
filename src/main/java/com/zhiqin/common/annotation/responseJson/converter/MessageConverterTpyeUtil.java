@@ -1,5 +1,10 @@
-package com.zhiqin.common.annotation.responseJson;
+package com.zhiqin.common.annotation.responseJson.converter;
 
+import com.zhiqin.common.annotation.responseJson.model.ResponseDataType;
+
+/**
+ * Created by zhangbinbin on 2017/8/31.
+ */
 public class MessageConverterTpyeUtil {
     /**
      * 返回json

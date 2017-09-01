@@ -1,5 +1,10 @@
-package com.zhiqin.common.annotation.responseJson;
+package com.zhiqin.common.annotation.responseJson.compress;
 
+import com.zhiqin.common.annotation.responseJson.model.SnappyUtils;
+
+/**
+ * Created by zhangbinbin on 2017/8/31.
+ */
 public class ClientCompressFactory {
     public static final int COMPRESS_GZIP = 1;
 
@@ -12,14 +17,14 @@ public class ClientCompressFactory {
     /**
      * http 请求头 请求的数据压缩方式
      */
-    public static  final String HTTP_HEAD_REQUEST_COMPRESSTYPE = "TN-REQ-COMPRESS-TYPE";
+    public static final String HTTP_HEAD_REQUEST_COMPRESSTYPE = "TN-REQ-COMPRESS-TYPE";
 
     /**
      * http 传入数据的压缩方式
      */
-    public static  final String HTTP_HEAD_DATA_COMPRESSTYPE = "TN-DATA-COMPRESS-TYPE";
+    public static final String HTTP_HEAD_DATA_COMPRESSTYPE = "TN-DATA-COMPRESS-TYPE";
 
-    //压缩方式填充字符串
+    // 压缩方式填充字符串
     public static final String COMPRESS_NAME_SNAPPY = "T-SNAPPY";
     public static final String COMPRESS_NAME_GZIP = "T-GZIP";
 

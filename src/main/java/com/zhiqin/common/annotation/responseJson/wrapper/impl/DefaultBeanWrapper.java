@@ -1,10 +1,11 @@
 package com.zhiqin.common.annotation.responseJson.wrapper.impl;
 
-import com.zhiqin.common.annotation.responseJson.SuccessData;
 import org.springframework.core.MethodParameter;
 
+import com.zhiqin.common.annotation.responseJson.model.SuccessData;
+
 /**
- * 优先级最低的默认bean包装
+ * Created by zhangbinbin on 2017/8/31.
  */
 public class DefaultBeanWrapper extends AbstractBeanWrapper {
     public Object wrap(Object bean) {

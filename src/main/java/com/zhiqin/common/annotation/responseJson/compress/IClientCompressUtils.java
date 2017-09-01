@@ -1,7 +1,10 @@
-package com.zhiqin.common.annotation.responseJson;
+package com.zhiqin.common.annotation.responseJson.compress;
 
 import java.io.File;
 
+/**
+ * Created by zhangbinbin on 2017/8/31.
+ */
 public interface IClientCompressUtils {
     /**
      * 数据压缩

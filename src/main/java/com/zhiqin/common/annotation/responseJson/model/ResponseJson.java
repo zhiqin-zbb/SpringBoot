@@ -1,4 +1,4 @@
-package com.zhiqin.common.annotation.responseJson;
+package com.zhiqin.common.annotation.responseJson.model;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 /**
  * Created by zhangbinbin on 2017/8/31.
  */
-@Target(ElementType.METHOD)
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface ResponseJson {

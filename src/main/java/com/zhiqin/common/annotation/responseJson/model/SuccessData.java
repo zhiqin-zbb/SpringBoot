@@ -1,5 +1,8 @@
-package com.zhiqin.common.annotation.responseJson;
+package com.zhiqin.common.annotation.responseJson.model;
 
+/**
+ * Created by zhangbinbin on 2017/8/31.
+ */
 public class SuccessData implements ResponseData {
     private boolean success = true;
 

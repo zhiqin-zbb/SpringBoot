@@ -1,11 +1,21 @@
-package com.zhiqin.common.annotation.responseJson;
+package com.zhiqin.common.annotation.responseJson.model;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import org.xerial.snappy.Snappy;
 import org.xerial.snappy.SnappyInputStream;
 import org.xerial.snappy.SnappyOutputStream;
 
-import java.io.*;
+import com.zhiqin.common.annotation.responseJson.compress.IClientCompressUtils;
 
+/**
+ * Created by zhangbinbin on 2017/8/31.
+ */
 public class SnappyUtils implements IClientCompressUtils {
     public static final String EXT = ".snappy";
     public static final int BUFFER = 1024;

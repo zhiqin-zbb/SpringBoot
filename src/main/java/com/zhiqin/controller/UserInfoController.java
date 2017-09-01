@@ -2,7 +2,6 @@ package com.zhiqin.controller;
 
 import java.util.List;
 
-import com.zhiqin.common.annotation.responseJson.ResponseJson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
+import com.zhiqin.common.annotation.requestJson.Json;
 import com.zhiqin.model.UserInfo;
 import com.zhiqin.service.UserInfoService;
-import com.zhiqin.common.annotation.requestJson.Json;
 
 @RestController
 @RequestMapping("/users")
@@ -26,7 +25,6 @@ public class UserInfoController {
     private UserInfoService userInfoService;
 
     @RequestMapping
-    @ResponseJson
     public PageInfo<UserInfo> getAll(UserInfo userInfo) {
         logger.info("get all user info");
         List<UserInfo> userInfoList = userInfoService.getAll(userInfo);
@@ -59,13 +57,6 @@ public class UserInfoController {
         userInfoService.save(userInfo);
         result.put("userInfo", userInfo);
         result.put("msg", msg);
-        return result;
-    }
-
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public ModelMap test(@Json UserInfo user) {
-        ModelMap result = new ModelMap();
-        result.put("msg", user.getId());
         return result;
     }
 }

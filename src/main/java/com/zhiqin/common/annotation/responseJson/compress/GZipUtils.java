@@ -1,9 +1,18 @@
-package com.zhiqin.common.annotation.responseJson;
+package com.zhiqin.common.annotation.responseJson.compress;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+/**
+ * Created by zhangbinbin on 2017/8/31.
+ */
 public class GZipUtils implements IClientCompressUtils {
     public static final int BUFFER = 1024;
     public static final String EXT = ".gz";

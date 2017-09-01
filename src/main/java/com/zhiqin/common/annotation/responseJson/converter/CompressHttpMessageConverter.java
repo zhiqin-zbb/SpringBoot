@@ -1,7 +1,8 @@
-package com.zhiqin.common.annotation.responseJson;
+package com.zhiqin.common.annotation.responseJson.converter;
+
+import java.io.IOException;
 
 import org.apache.commons.codec.binary.Base64;
-import org.codehaus.jackson.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpOutputMessage;
@@ -9,16 +10,29 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.FileCopyUtils;
 
-import java.io.IOException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.zhiqin.common.annotation.responseJson.compress.ClientCompressFactory;
+import com.zhiqin.common.annotation.responseJson.compress.IClientCompressUtils;
 
+/**
+ * Created by zhangbinbin on 2017/8/31.
+ */
 public class CompressHttpMessageConverter extends MappingJackson2HttpMessageConverter {
-    //log
     private static final Logger log = LoggerFactory.getLogger(CompressHttpMessageConverter.class);
 
-    //Converter 类型
+    /**
+     * Converter 类型
+     */
     private int converterType;
-    //
+
+    /**
+     * Compress 类型
+     */
     private int compressType;
+
+    public CompressHttpMessageConverter() {
+        super();
+    }
 
     public CompressHttpMessageConverter(int converterType, int compressType) {
         super();
@@ -35,7 +49,7 @@ public class CompressHttpMessageConverter extends MappingJackson2HttpMessageConv
             IClientCompressUtils iClientCompressUtils = null;
             switch (converterType) {
                 case MessageConverterTpyeUtil.MESSAGE_CONVERTER_TYPE_JSON:
-                    //不使用base64
+                    // 不使用base64
                     break;
                 case MessageConverterTpyeUtil.MESSAGE_CONVERTER_TYPE_JSON_BASE64:
                     bytes = Base64.encodeBase64(bytes);

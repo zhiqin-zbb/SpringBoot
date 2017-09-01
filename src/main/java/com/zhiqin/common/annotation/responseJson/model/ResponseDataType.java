@@ -1,5 +1,8 @@
-package com.zhiqin.common.annotation.responseJson;
+package com.zhiqin.common.annotation.responseJson.model;
 
+/**
+ * Created by zhangbinbin on 2017/8/31.
+ */
 public class ResponseDataType {
     /**
      * http头字段名 请求的数据组织类型

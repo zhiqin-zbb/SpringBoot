@@ -1,8 +1,12 @@
 package com.zhiqin.common.annotation.responseJson.wrapper.impl;
 
-import com.zhiqin.common.annotation.responseJson.ResponseVo;
 import org.springframework.core.MethodParameter;
 
+import com.zhiqin.common.annotation.responseJson.model.ResponseVo;
+
+/**
+ * Created by zhangbinbin on 2017/8/31.
+ */
 public class ResponseVoWrapper extends AbstractBeanWrapper {
     public Object wrap(Object bean) {
         return (ResponseVo) bean;
