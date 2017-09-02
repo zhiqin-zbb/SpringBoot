@@ -36,4 +36,8 @@ public class CityService {
             cityMapper.insert(country);
         }
     }
+
+    public City query(Integer id) {
+        return cityMapper.query(id);
+    }
 }
