@@ -3,6 +3,7 @@ package com.zhiqin.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.zhiqin.common.annotation.responseJson.wrapper.impl.PageInfoBeanWrapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -35,6 +36,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
         List<BeanWrapper> beanWrapperList = new ArrayList<>();
         beanWrapperList.add(new ResponseVoWrapper());
+        beanWrapperList.add(new PageInfoBeanWrapper());
         beanWrapperList.add(new DefaultBeanWrapper());
         responseJsonMethodProcessor.setBeanWrappers(beanWrapperList);
 
