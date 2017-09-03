@@ -6,7 +6,7 @@ import lombok.Data;
  * Created by zhangbinbin on 2017/8/31.
  */
 @Data
-public class SuccessData implements ResponseData {
+public class SuccessData {
     private boolean success = true;
 
     private Object data;

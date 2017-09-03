@@ -56,11 +56,20 @@ public class TestController {
         return responseVo;
     }
 
-    @RequestMapping(value = "queryUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/queryUser", method = RequestMethod.GET)
     @ResponseJson
     public PageInfo<UserInfo> getAllUser(UserInfo userInfo) {
         List<UserInfo> userInfoList = userInfoService.getAll(userInfo);
         PageInfo<UserInfo> userInfoPageInfo = new PageInfo<>(userInfoList);
         return userInfoPageInfo;
+    }
+
+    @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
+    @ResponseJson
+    public UserInfo getString() {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(222);
+        userInfo.setUsername(String.valueOf(222));
+        return userInfo;
     }
 }

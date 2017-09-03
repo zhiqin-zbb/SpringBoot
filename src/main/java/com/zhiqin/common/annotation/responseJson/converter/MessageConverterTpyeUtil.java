@@ -9,12 +9,12 @@ public class MessageConverterTpyeUtil {
     /**
      * 返回json
      */
-    public static final int MESSAGE_CONVERTER_TYPE_JSON = 2;
+    public static final int MESSAGE_CONVERTER_TYPE_JSON = 0;
 
     /**
      * 返回json包base64之后的数据
      */
-    public static final int MESSAGE_CONVERTER_TYPE_JSON_BASE64 = 3;
+    public static final int MESSAGE_CONVERTER_TYPE_JSON_BASE64 = 1;
 
     /**
      * 默认

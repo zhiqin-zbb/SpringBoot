@@ -3,13 +3,14 @@ package com.zhiqin.common.annotation.responseJson.wrapper.impl;
 import org.springframework.core.MethodParameter;
 
 import com.github.pagehelper.PageInfo;
+import com.zhiqin.common.annotation.responseJson.wrapper.BeanWrapper;
 
 /**
  * Created by zhangbinbin on 2017/8/31.
  */
-public class PageInfoBeanWrapper extends AbstractBeanWrapper {
+public class PageInfoBeanWrapper implements BeanWrapper {
     @Override
-    public boolean supports(MethodParameter returnType) {
+    public boolean supportsType(MethodParameter returnType) {
         return PageInfo.class.isAssignableFrom(returnType.getParameterType());
     }
 

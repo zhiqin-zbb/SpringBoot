@@ -24,29 +24,16 @@ import com.zhiqin.common.annotation.responseJson.model.ResponseDataType;
 import com.zhiqin.common.annotation.responseJson.model.ResponseJson;
 import com.zhiqin.common.annotation.responseJson.wrapper.BeanWrapper;
 
+import lombok.Data;
+
 /**
  * Created by zhangbinbin on 2017/8/31.
  */
+@Data
 public class ResponseJsonMethodProcessor implements HandlerMethodReturnValueHandler, InitializingBean {
     private HttpMessageConverter messageConverter;
 
     private List<BeanWrapper> beanWrappers;
-
-    public List<BeanWrapper> getBeanWrappers() {
-        return beanWrappers;
-    }
-
-    public void setBeanWrappers(List<BeanWrapper> beanWrappers) {
-        this.beanWrappers = beanWrappers;
-    }
-
-    public HttpMessageConverter getMessageConverter() {
-        return messageConverter;
-    }
-
-    public void setMessageConverter(HttpMessageConverter messageConverter) {
-        this.messageConverter = messageConverter;
-    }
 
     public boolean supportsReturnType(MethodParameter returnType) {
         return returnType.getMethodAnnotation(ResponseJson.class) != null;
@@ -56,19 +43,19 @@ public class ResponseJsonMethodProcessor implements HandlerMethodReturnValueHand
                                   NativeWebRequest webRequest) throws Exception {
         Object result = returnValue;
         mavContainer.setRequestHandled(true);
-        ResponseJson responseJson = null;
+        ResponseJson responseJson;
         ServletServerHttpResponse outputMessage = createOutputMessage(webRequest);
         responseJson = returnType.getMethodAnnotation(ResponseJson.class);
 
         if (returnValue == null) {
-            Map<String, Object> message = new HashMap<String, Object>();
+            Map<String, Object> message = new HashMap<>();
             message.put("success", true);
             message.put("data", new HashMap<String, String>());
             result = message;
         } else {
             if ((responseJson.location() == ResponseJson.Location.MESSAGE)
                     || ((returnValue instanceof String) && (responseJson.location() == ResponseJson.Location.UNDEFINED))) {
-                Map<String, Object> message = new HashMap<String, Object>();
+                Map<String, Object> message = new HashMap<>();
                 message.put("success", true);
                 message.put("msg", returnValue);
                 result = message;
@@ -84,19 +71,19 @@ public class ResponseJsonMethodProcessor implements HandlerMethodReturnValueHand
 
         if (responseJson.compressType() == ResponseJson.compressType.NOCOMPRESS) {
             if (responseJson.location() == ResponseJson.Location.DATA) {
-                //只返回json
+                // 只返回json
                 HttpMessageConverter converter = new JsonHttpMessageConverter();
                 converter.write(result,
                         new MediaType(MediaType.APPLICATION_JSON, Collections.singletonMap("charset", "UTF-8")),
                         outputMessage);
             } else if (responseJson.location() == ResponseJson.Location.BYREQUEST) {
-                //根据http请求头中的设置阻止返回数据
+                // 根据http请求头中的设置阻止返回数据
                 int converterType = MessageConverterTpyeUtil.getMessageConverterTypeFromHttpHead(
                         webRequest.getHeader(ResponseDataType.HTTP_HEAD_REQUEST_DATA_TYPE));
                 switch (converterType) {
                     case MessageConverterTpyeUtil.MESSAGE_CONVERTER_TYPE_JSON:
                         HttpMessageConverter converter = new JsonHttpMessageConverter();
-                        //设置http头
+                        // 设置http头
                         outputMessage.getHeaders().set(ResponseDataType.HTTP_HEAD_RESPONSE_DATA_TYPE,
                                 ResponseDataType.RESPONSE_DATA_TYPE_JSON);
                         converter.write(result,
@@ -104,7 +91,7 @@ public class ResponseJsonMethodProcessor implements HandlerMethodReturnValueHand
                                 outputMessage);
                         break;
                     case MessageConverterTpyeUtil.MESSAGE_CONVERTER_TYPE_JSON_BASE64:
-                        //设置http头
+                        // 设置http头
                         outputMessage.getHeaders().set(ResponseDataType.HTTP_HEAD_RESPONSE_DATA_TYPE,
                                 ResponseDataType.RESPONSE_DATA_TYPE_JSON_BASE64);
                         messageConverter.write(result,
@@ -117,20 +104,20 @@ public class ResponseJsonMethodProcessor implements HandlerMethodReturnValueHand
                                 outputMessage);
                 }
             } else {
-                //返回json+base64
+                // 返回json+base64
                 messageConverter.write(result,
                         new MediaType(MediaType.APPLICATION_JSON, Collections.singletonMap("charset", "UTF-8")),
                         outputMessage);
             }
         } else {
-            int converterType = MessageConverterTpyeUtil.MESSAGE_CONVERTER_TYPE_UNDEFINE;
+            int converterType;
             int compressType = ClientCompressFactory.COMPRESS_UNKNOW;
             if (responseJson.location() == ResponseJson.Location.DATA) {
                 converterType = MessageConverterTpyeUtil.MESSAGE_CONVERTER_TYPE_JSON;
             } else if (responseJson.location() == ResponseJson.Location.BYREQUEST) {
                 converterType = MessageConverterTpyeUtil.getMessageConverterTypeFromHttpHead(
                         webRequest.getHeader(ResponseDataType.HTTP_HEAD_REQUEST_DATA_TYPE));
-                //设置http头
+                // 设置http头
                 switch (converterType) {
                     case MessageConverterTpyeUtil.MESSAGE_CONVERTER_TYPE_JSON:
                         outputMessage.getHeaders().set(ResponseDataType.HTTP_HEAD_RESPONSE_DATA_TYPE,
@@ -154,7 +141,7 @@ public class ResponseJsonMethodProcessor implements HandlerMethodReturnValueHand
             } else if (responseJson.compressType() == ResponseJson.compressType.SNAPPY) {
                 compressType = ClientCompressFactory.COMPRESS_SNAPPY;
             } else if (responseJson.compressType() == ResponseJson.compressType.BYREQUEST) {
-                //解析得到请求的压缩方式
+                // 解析得到请求的压缩方式
                 String dataCompressType = webRequest.getHeader(ClientCompressFactory.HTTP_HEAD_REQUEST_COMPRESSTYPE);
                 if (null != dataCompressType) {
                     compressType = ClientCompressFactory.getCompressTypeFromHeanderString(dataCompressType);

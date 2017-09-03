@@ -30,10 +30,6 @@ public class CompressHttpMessageConverter extends MappingJackson2HttpMessageConv
      */
     private int compressType;
 
-    public CompressHttpMessageConverter() {
-        super();
-    }
-
     public CompressHttpMessageConverter(int converterType, int compressType) {
         super();
         this.converterType = converterType;

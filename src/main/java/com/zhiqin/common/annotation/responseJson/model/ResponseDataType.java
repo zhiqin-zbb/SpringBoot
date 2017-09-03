@@ -7,12 +7,12 @@ public class ResponseDataType {
     /**
      * http头字段名 请求的数据组织类型
      */
-    public static final String HTTP_HEAD_REQUEST_DATA_TYPE = "TN-REQ-DATA-TYPE";
+    public static final String HTTP_HEAD_REQUEST_DATA_TYPE = "REQ-DATA-TYPE";
 
     /**
      * http头字段名 返回的数据组织类型
      */
-    public static final String HTTP_HEAD_RESPONSE_DATA_TYPE = "TN-RES-DATA-TYPE";
+    public static final String HTTP_HEAD_RESPONSE_DATA_TYPE = "RES-DATA-TYPE";
 
     /**
      * 返回的数据为json字符串

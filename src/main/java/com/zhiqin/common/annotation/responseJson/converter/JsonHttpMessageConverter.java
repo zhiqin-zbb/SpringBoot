@@ -15,14 +15,9 @@ import org.springframework.util.FileCopyUtils;
 public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverter {
     private static final Logger log = LoggerFactory.getLogger(JsonHttpMessageConverter.class);
 
-    public JsonHttpMessageConverter() {
-        super();
-    }
-
-    protected void writeInternal(Object object, HttpOutputMessage outputMessage) throws IOException,
-            HttpMessageNotWritableException {
+    protected void writeInternal(Object object, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
         try {
-            byte[] bytes = getObjectMapper().writeValueAsBytes(object);
+            byte[] bytes = this.getObjectMapper().writeValueAsBytes(object);
             FileCopyUtils.copy(bytes, outputMessage.getBody());
         } catch (com.fasterxml.jackson.core.JsonProcessingException ex) {
             log.error("Could not write JSON: " + ex.getMessage(), ex);

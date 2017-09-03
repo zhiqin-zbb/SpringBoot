@@ -35,8 +35,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         ResponseJsonMethodProcessor responseJsonMethodProcessor = new ResponseJsonMethodProcessor();
 
         List<BeanWrapper> beanWrapperList = new ArrayList<>();
-        beanWrapperList.add(new ResponseVoWrapper());
         beanWrapperList.add(new PageInfoBeanWrapper());
+        beanWrapperList.add(new ResponseVoWrapper());
         beanWrapperList.add(new DefaultBeanWrapper());
         responseJsonMethodProcessor.setBeanWrappers(beanWrapperList);
 

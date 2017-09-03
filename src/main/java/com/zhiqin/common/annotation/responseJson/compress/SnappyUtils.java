@@ -1,4 +1,4 @@
-package com.zhiqin.common.annotation.responseJson.model;
+package com.zhiqin.common.annotation.responseJson.compress;
 
 import java.io.File;
 import java.io.FileInputStream;
