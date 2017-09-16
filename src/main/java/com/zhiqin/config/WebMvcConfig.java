@@ -3,7 +3,6 @@ package com.zhiqin.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.zhiqin.common.annotation.responseJson.wrapper.impl.PageInfoBeanWrapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -16,6 +15,7 @@ import com.zhiqin.common.annotation.responseJson.ResponseJsonMethodProcessor;
 import com.zhiqin.common.annotation.responseJson.converter.Base64JsonHttpMessageConverter;
 import com.zhiqin.common.annotation.responseJson.wrapper.BeanWrapper;
 import com.zhiqin.common.annotation.responseJson.wrapper.impl.DefaultBeanWrapper;
+import com.zhiqin.common.annotation.responseJson.wrapper.impl.PageInfoBeanWrapper;
 import com.zhiqin.common.annotation.responseJson.wrapper.impl.ResponseVoWrapper;
 
 @Configuration
@@ -23,6 +23,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
     @Override

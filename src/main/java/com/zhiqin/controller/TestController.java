@@ -3,8 +3,13 @@ package com.zhiqin.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -23,6 +28,8 @@ import com.zhiqin.service.UserInfoService;
 @Controller
 @RequestMapping("/test")
 public class TestController {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private CityService cityService;
 
@@ -71,5 +78,14 @@ public class TestController {
         userInfo.setId(222);
         userInfo.setUsername(String.valueOf(222));
         return userInfo;
+    }
+
+    @RequestMapping(value = "/cities", method = RequestMethod.GET)
+    public String getAllCities(@Valid City city, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "index";
+        }
+        logger.info("city valid!");
+        return "index";
     }
 }
