@@ -1,10 +1,12 @@
 package com.zhiqin.config;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -17,6 +19,7 @@ import com.zhiqin.common.annotation.responseJson.wrapper.BeanWrapper;
 import com.zhiqin.common.annotation.responseJson.wrapper.impl.DefaultBeanWrapper;
 import com.zhiqin.common.annotation.responseJson.wrapper.impl.PageInfoBeanWrapper;
 import com.zhiqin.common.annotation.responseJson.wrapper.impl.ResponseVoWrapper;
+import com.zhiqin.common.date.LocalDateFormatter;
 
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
@@ -50,5 +53,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> returnValueHandlers) {
         returnValueHandlers.add(getResponseJsonMethodProcessor());
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatterForFieldType(LocalDate.class, new LocalDateFormatter());
     }
 }
