@@ -26,7 +26,7 @@ import com.zhiqin.service.UserInfoService;
  * Created by zhangbinbin on 2017/9/1.
  */
 @Controller
-@RequestMapping("/test")
+@RequestMapping("/base64/test")
 public class TestController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
