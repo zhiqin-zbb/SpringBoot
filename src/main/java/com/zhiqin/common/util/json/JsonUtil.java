@@ -51,7 +51,6 @@ public class JsonUtil extends JsonFormatter {
         } catch (Exception e) {
             return JsonUtil.toList(map.get(key));
         }
-
     }
 
     /**
@@ -71,7 +70,6 @@ public class JsonUtil extends JsonFormatter {
         } catch (Exception e) {
             return JsonUtil.toBean(map.get(key), Map.class);
         }
-
     }
 
     /**
@@ -188,7 +186,6 @@ public class JsonUtil extends JsonFormatter {
                 return defaultValue;
             }
         }
-
     }
 
     /**
@@ -270,7 +267,7 @@ public class JsonUtil extends JsonFormatter {
             JsonFormatter.setDateFormat(dateFormat);
             return JsonFormatter.toJsonString(obj);
         } catch (Exception e) {
-
+            LOG.error("JsonFormatter.toJsonString error: ", e);
         }
         return null;
     }
@@ -307,8 +304,7 @@ public class JsonUtil extends JsonFormatter {
         List<Object> list = JsonUtil.toBean(obj, List.class);
         if (null != list) {
             for (Object object : list) {
-                Map<String, Object> map = JsonUtil
-                        .toBean(object, HashMap.class);
+                Map<String, Object> map = JsonUtil.toBean(object, HashMap.class);
                 if (null != map) {
                     lists.add(map);
                 }

@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
-import com.zhiqin.common.wrapper.Base64HttpServletRequestWrapper;
-
 /**
  * Created by zhangbinbin on 2017/8/28.
  */

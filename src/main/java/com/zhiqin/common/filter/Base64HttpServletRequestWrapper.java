@@ -1,4 +1,4 @@
-package com.zhiqin.common.wrapper;
+package com.zhiqin.common.filter;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
