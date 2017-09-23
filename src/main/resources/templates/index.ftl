@@ -1,8 +1,8 @@
 <html>
 <head>
     <title>Mybatis分页插件 - 测试页面</title>
-    <script src="${request.contextPath}/static/js/util/Loader.js"></script>
-    <script src="${request.contextPath}/static/js/country/countryConfig.js"></script>
+    <script src="${request.contextPath}/static/js/util/jquery-1.11.1.min.js"></script>
+    <link href="${request.contextPath}/static/css/style.css" rel="stylesheet" type="text/css"/>
     <style type="text/css">
         .pageDetail {
             display: none;
@@ -12,14 +12,20 @@
             display: table-row;
         }
     </style>
+    <script>
+        $(function () {
+            $('#list').click(function () {
+                $('.pageDetail').toggleClass('show');
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="wrapper">
     <div class="middle">
         <h1 style="padding: 50px 0 20px;">国家(地区)列表</h1>
 
-        <button id="test">Test</button>
-        <form>
+        <form action="${request.contextPath}/countries" method="post">
             <table class="gridtable" style="width:100%;">
                 <tr>
                     <th>国家(地区)名称：</th>
@@ -28,7 +34,7 @@
                     <th>国家(地区)代码：</th>
                     <td><input type="text" name="countrycode"
                                value="<#if queryParam.countrycode??>${queryParam.countrycode}</#if>"/></td>
-                    <td rowspan="2"><button onclick="Country.submit();">查询</button></td>
+                    <td rowspan="2"><input type="submit" value="查询"/></td>
                 </tr>
                 <tr>
                     <th>页码：</th>
@@ -137,12 +143,10 @@
             <tr>
                 <#if pageInfo.hasPreviousPage>
                     <td>
-                        <a href="javascript:void(0);"
-                           onclick="System.redirect('page=1&rows=${pageInfo.pageSize}<#if queryParam.countryname??>&countryname=${queryParam.countryname}</#if><#if queryParam.countrycode??>&countrycode=${queryParam.countrycode}</#if>');">首页</a>
+                        <a href="${request.contextPath}/countries?page=1&rows=${pageInfo.pageSize}&countryname=${queryParam.countryname}&countrycode=${queryParam.countrycode}">首页</a>
                     </td>
                     <td>
-                        <a href="javascript:void(0);"
-                           onclick="System.redirect('page=${pageInfo.prePage}&rows=${pageInfo.pageSize}<#if queryParam.countryname??>&countryname=${queryParam.countryname}</#if><#if queryParam.countrycode??>&countrycode=${queryParam.countrycode}</#if>');">前一页</a>
+                        <a href="${request.contextPath}/countries?page=${pageInfo.prePage}&rows=${pageInfo.pageSize}&countryname=${queryParam.countryname}&countrycode=${queryParam.countrycode}">前一页</a>
                     </td>
                 </#if>
                 <#list pageInfo.navigatepageNums as nav>
@@ -151,19 +155,16 @@
                     </#if>
                     <#if nav != pageInfo.pageNum>
                         <td>
-                            <a href="javascript:void(0);"
-                               onclick="System.redirect('page=${nav}&rows=${pageInfo.pageSize}<#if queryParam.countryname??>&countryname=${queryParam.countryname}</#if><#if queryParam.countrycode??>&countrycode=${queryParam.countrycode}</#if>');">${nav}</a>
+                            <a href="${request.contextPath}/countries?page=${nav}&rows=${pageInfo.pageSize}&countryname=<#if queryParam.countryname??>${queryParam.countryname}</#if>&countrycode=<#if queryParam.countrycode??>${queryParam.countrycode}</#if>">${nav}</a>
                         </td>
                     </#if>
                 </#list>
                 <#if pageInfo.hasNextPage>
                     <td>
-                        <a href="javascript:void(0);"
-                           onclick="System.redirect('page=${pageInfo.nextPage}&rows=${pageInfo.pageSize}<#if queryParam.countryname??>&countryname=${queryParam.countryname}</#if><#if queryParam.countrycode??>&countrycode=${queryParam.countrycode}</#if>');">下一页</a>
+                        <a href="${request.contextPath}/countries?page=${pageInfo.nextPage}&rows=${pageInfo.pageSize}&countryname=<#if queryParam.countryname??>${queryParam.countryname}</#if>&countrycode=<#if queryParam.countrycode??>${queryParam.countrycode}</#if>">下一页</a>
                     </td>
                     <td>
-                        <a href="javascript:void(0);"
-                           onclick="System.redirect('page=${pageInfo.pages}&rows=${pageInfo.pageSize}');">尾页</a>
+                        <a href="${request.contextPath}/countries?page=${pageInfo.pages}&rows=${pageInfo.pageSize}&countryname=<#if queryParam.countryname??>${queryParam.countryname}</#if>&countrycode=<#if queryParam.countrycode??>${queryParam.countrycode}</#if>">尾页</a>
                     </td>
                 </#if>
             </tr>
