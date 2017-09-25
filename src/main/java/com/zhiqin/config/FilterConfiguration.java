@@ -17,7 +17,7 @@ public class FilterConfiguration {
         // 注入过滤器
         registration.setFilter(new Base64DecodingFilter());
         // 拦截规则
-        registration.addUrlPatterns("/base64/*");
+        registration.addUrlPatterns("/base64/*", "*.base64");
         // 过滤器名称
         registration.setName("base64DecodingFilter");
         // 是否自动注册

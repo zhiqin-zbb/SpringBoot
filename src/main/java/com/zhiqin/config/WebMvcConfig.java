@@ -9,8 +9,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.util.UrlPathHelper;
 
 import com.zhiqin.common.annotation.requestJson.JsonArgumentResolver;
 import com.zhiqin.common.annotation.responseJson.ResponseJsonMethodProcessor;
@@ -23,17 +25,26 @@ import com.zhiqin.common.date.LocalDateFormatter;
 
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
+    /**
+     * 使用webjars
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
+    /**
+     * 处理@Json注解
+     */
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(new JsonArgumentResolver());
     }
 
+    /**
+     * 处理@ResponseJson注解
+     */
     @Bean
     public ResponseJsonMethodProcessor getResponseJsonMethodProcessor() {
         ResponseJsonMethodProcessor responseJsonMethodProcessor = new ResponseJsonMethodProcessor();
@@ -55,8 +66,21 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         returnValueHandlers.add(getResponseJsonMethodProcessor());
     }
 
+    /**
+     * 处理LocalDate格式
+     */
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatterForFieldType(LocalDate.class, new LocalDateFormatter());
+    }
+
+    /**
+     * 不再移除URL中分号之后的字符
+     */
+    @Override
+    public void configurePathMatch(PathMatchConfigurer configurer) {
+        UrlPathHelper urlPathHelper = new UrlPathHelper();
+        urlPathHelper.setRemoveSemicolonContent(false);
+        configurer.setUrlPathHelper(urlPathHelper);
     }
 }
