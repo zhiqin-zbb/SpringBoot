@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
+import com.zhiqin.common.util.MD5Utils;
 import com.zhiqin.mapper.UserInfoMapper;
 import com.zhiqin.model.UserInfo;
 
@@ -33,13 +34,22 @@ public class UserInfoService {
     }
 
     public void save(UserInfo user) {
+        String encodedPassword = MD5Utils.sign(user.getPassword());
+        user.setPassword(encodedPassword);
+
         if (user.getId() != null) {
-            user.setPassword(creatMD5(user.getPassword()));
             userInfoMapper.updateByPrimaryKey(user);
         } else {
-            user.setPassword(creatMD5(user.getPassword()));
             userInfoMapper.insert(user);
         }
+    }
+
+    public Boolean validate(UserInfo userInfo) {
+        UserInfo user = new UserInfo();
+        user.setUsername(userInfo.getUsername());
+        UserInfo userInDb = userInfoMapper.selectOne(user);
+
+        return MD5Utils.verify(userInfo.getPassword(), userInDb.getPassword());
     }
 
     private String creatMD5(String password) {
